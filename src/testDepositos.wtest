@@ -1,0 +1,73 @@
+import bicis.*
+import accesorios.*
+import depositos.*
+
+describe "Tests de depositos" {
+	
+	test "Atributos de deposito 1"{
+		const bici1 = new Bicis(rodado= 28, largo = 150, marca = 'Olmo')
+		const farolito = new Farolito()
+		bici1.agregarAccesorios( [farolito] )
+
+		const bici2 = new Bicis(rodado= 26, largo= 110, marca='Legnano')
+		const farolito2 = new Farolito()
+		const canasto = new Canasto(volumen= 8)
+		const morral = new Morral(largo= 21, ojoDeGato= true)	
+		bici2.agregarAccesorios( [farolito2, canasto, morral] )
+		
+		const bici3 = new Bicis(rodado= 20, largo= 90, marca='Legnano')
+		const morral2 = new Morral(largo= 6, ojoDeGato= false)	
+		bici3.agregarAccesorios( [morral2] )
+		
+		const deposito = new Depositos()
+		deposito.agregarBicis([bici1, bici2, bici3])
+		
+		assert.equals(deposito.bicisRapidas(), [bici1, bici2])
+		assert.equals(deposito.marcas(), #{'Legnano', 'Olmo'})
+		assert.notThat(deposito.esNocturno())
+		assert.that(deposito.tieneBici(10))
+		assert.notThat(deposito.tieneBici(50))
+	}
+	test "Atributos de deposito 2"{
+		const bici1 = new Bicis(rodado= 28, largo = 150, marca = 'Olmo')
+		const farolito = new Farolito()
+		bici1.agregarAccesorios( [farolito] )
+
+		const bici2 = new Bicis(rodado= 26, largo= 110, marca='Legnano')
+		const farolito2 = new Farolito()
+		const canasto = new Canasto(volumen= 8)
+		const morral = new Morral(largo= 21, ojoDeGato= true)	
+		bici2.agregarAccesorios( [farolito2, canasto, morral] )
+		
+		const deposito2 = new Depositos()
+		deposito2.agregarBicis([bici1, bici2])
+		assert.that(deposito2.esNocturno())
+		
+		assert.equals(deposito2.marcaMasRapida(), 'Olmo')
+	}
+	test "Carga de bicis largas"{
+		const bici1 = new Bicis(rodado= 28, largo = 177, marca = 'Olmo')
+		const canasto = new Canasto(volumen= 8)
+		bici1.agregarAccesorios( [canasto] )
+
+		const bici2 = new Bicis(rodado= 26, largo= 180, marca='Legnano')
+		const farolito = new Farolito()
+		bici2.agregarAccesorios( [farolito, canasto] )
+		
+		const deposito = new Depositos()
+		deposito.agregarBicis([bici1, bici2])
+		assert.equals(deposito.cargaBicisLargas(), 32)
+	}		
+	test "Bicis sin accesorios"{
+		const bici1 = new Bicis(rodado= 28, largo = 177, marca = 'Olmo')
+
+		const bici2 = new Bicis(rodado= 26, largo= 180, marca='Legnano')
+		const farolito = new Farolito()
+		const canasto = new Canasto(volumen= 8)
+		bici2.agregarAccesorios( [farolito, canasto] )
+		
+		const deposito = new Depositos()
+		deposito.agregarBicis([bici1, bici2])
+		assert.equals(deposito.bicisSinAcc(), 1)
+	}
+}

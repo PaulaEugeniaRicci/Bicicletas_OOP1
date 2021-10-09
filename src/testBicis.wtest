@@ -1,0 +1,47 @@
+import bicis.*
+import accesorios.*
+
+describe "Tests de Bicis" {
+	
+	test "Atributos bici 1"{
+		const bici1 = new Bicis(rodado= 28, largo = 150, marca = 'Olmo')
+		const farolito = new Farolito()
+		bici1.agregarAccesorios([farolito])
+
+		assert.equals(bici1.altura(), 85)
+		assert.equals(bici1.velocidadDeCrucero(), 34)
+		assert.equals(bici1.carga(), 0)
+		assert.equals(bici1.peso(), 14.5)
+		assert.that(bici1.tieneLuz())
+		assert.equals(bici1.cantAccesoriosLivianos(), 1)
+	}
+
+	test "Atributos bici 2"{
+		const bici2 = new Bicis(rodado= 26, largo= 110, marca='Legnano')
+		const farolito = new Farolito()
+		const canasto = new Canasto(volumen= 8)
+		const morral = new Morral(largo= 21, ojoDeGato= true)	
+		bici2.agregarAccesorios( [farolito, canasto, morral])
+		
+		assert.equals(bici2.altura(), 80)
+		assert.equals(bici2.velocidadDeCrucero(), 28)
+		assert.equals(bici2.carga(), 23)
+		assert.equals(bici2.peso(), 15.5)
+		assert.that(bici2.tieneLuz())
+		assert.equals(bici2.cantAccesoriosLivianos(), 2)
+		
+	}
+
+	test "Atributos bici 3"{
+		const bici3 = new Bicis(rodado= 20, largo= 90, marca='Legnano')
+		const morral = new Morral(largo= 6, ojoDeGato= false)	
+		bici3.agregarAccesorios( [morral] )
+		
+		assert.equals(bici3.altura(), 65)
+		assert.equals(bici3.velocidadDeCrucero(), 22)
+		assert.equals(bici3.carga(), 2)
+		assert.equals(bici3.peso(), 11.2)
+		assert.notThat(bici3.tieneLuz())
+		assert.equals(bici3.cantAccesoriosLivianos(), 0)
+	}
+}
