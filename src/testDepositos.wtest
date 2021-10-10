@@ -23,7 +23,7 @@ describe "Tests de depositos" {
 		deposito.agregarBicis([bici1, bici2, bici3])
 		
 		assert.equals(deposito.bicisRapidas(), [bici1, bici2])
-		assert.equals(deposito.marcas(), #{'Legnano', 'Olmo'})
+		assert.equals(deposito.marcas(), ['Legnano', 'Olmo'])
 		assert.notThat(deposito.esNocturno())
 		assert.that(deposito.tieneBici(10))
 		assert.notThat(deposito.tieneBici(50))
@@ -70,4 +70,21 @@ describe "Tests de depositos" {
 		deposito.agregarBicis([bici1, bici2])
 		assert.equals(deposito.bicisSinAcc(), 1)
 	}
+	test "Lista de bicis companieras"{
+		const bici1 = new Bicis(rodado= 28, largo = 177, marca = 'Olmo')
+		const bici2 = new Bicis(rodado= 26, largo= 180, marca='Legnano')
+		const bici3 = new Bicis(rodado= 26, largo= 190, marca='Legnano')
+		const deposito = new Depositos()
+		deposito.agregarBicis([bici1, bici2, bici3])
+		assert.equals(deposito.bicisCompanieras(bici2), [bici3])
+	}
+	test "Hay par de bicis companieras"{
+		const bici1 = new Bicis(rodado= 28, largo = 177, marca = 'Olmo')
+		const bici2 = new Bicis(rodado= 26, largo= 180, marca='Legnano')
+		const bici3 = new Bicis(rodado= 26, largo= 190, marca='Legnano')
+		const deposito = new Depositos()
+		deposito.agregarBicis([bici1, bici2, bici3])
+		assert.that(deposito.hayParCompanieras())
+	}
+	
 }
